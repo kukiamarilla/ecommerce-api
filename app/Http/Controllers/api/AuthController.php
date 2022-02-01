@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use Log;
 
 class AuthController extends Controller
 {
@@ -16,9 +17,12 @@ class AuthController extends Controller
         $credentials = request(['email', 'password']);
 
         if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json([
+                'error' => 'Unauthorized',
+                'message' => 'Invalid credentials',
+            ], 401);
         }
-
+        Log::info($token);
         return $this->respondWithToken($token);
     }
 
