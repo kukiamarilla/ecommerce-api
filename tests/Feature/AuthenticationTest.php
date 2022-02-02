@@ -18,7 +18,6 @@ class AuthenticationTest extends TestCase {
 
         $this->user = User::factory()->create([
             'email' => 'test@test.com',
-            'email_verified_at' => now()->subDays(1),
             'password' => bcrypt('password'),
         ]);
     }
@@ -38,17 +37,6 @@ class AuthenticationTest extends TestCase {
             'token_type',
             'expires_in',
         ]);
-    }
-
-    /**
-     * @test El usuario no puede loguearse con un email no verificado
-     */
-    public function test_cannot_login_a_user_with_unverified_email() {
-        $reponse = $this->postJson('/api/login', [
-            'email' => $this->user->email,
-            'password' => 'password',
-        ]);
-        $reponse->assertStatus(401);
     }
 
     /**
