@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use DB;
 use Illuminate\Database\Seeder;
 
@@ -24,5 +25,6 @@ class UsersTableSeeder extends Seeder
                 "updated_at" => date("Y-m-d H:i:s")
             ],
         ]);
+        User::where('email', 'admin@ecommerce.com')->first()->assignRole('Admin');
     }
 }
